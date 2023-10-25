@@ -11,13 +11,13 @@
     <p>{{ message.title }}</p>
    <p>{{ message.content }}</p>
 <p>----------------</p>
-<a href="{% url 'delete_message' message.id %}">delete</a>
+<a href="{% url 'delete_message' message.id %}" class="btn btn-danger">delete</a>
 <br>
-<a href="{% url 'update_message' message.id %}">update</a>
+<a href="{% url 'update_message' message.id %}" class="btn btn-warning">update</a>
 
 <br>
 
-<a href="{% url 'messageAll' %}">tous message</a>
+<a href="{% url 'messageAll' %}" class="btn btn-secondary">tous message</a>
 
 
 {% endblock %}
