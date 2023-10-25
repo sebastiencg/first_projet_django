@@ -1,0 +1,23 @@
+{% extends 'siteweb/base.html' %}
+
+{% block content %}
+
+
+
+
+<h1>salut</h1>
+
+{% for message in messages %}
+<p>----------</p>
+    <p>{{ message.title }}</p>
+   <p>{{ message.content }}</p>
+<a href="{% url 'show_message' message.id %}">voir</a>
+
+<p>----------------</p>
+
+{% endfor %}
+
+<a href="{% url 'home_bidule'%}">bidule</a>
+
+
+{% endblock %}
