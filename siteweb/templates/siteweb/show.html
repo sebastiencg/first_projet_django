@@ -1,23 +1,46 @@
 {% extends 'siteweb/base.html' %}
 
 {% block content %}
-
+{% load crispy_forms_tags %}
 
 
 
 <h1>salut</h1>
 
 <p>----------</p>
+    <p>category : {{ message.category.name }}</p>
+<p>----------</p>
+    <p>author : {{ message.author.username }}</p>
+<p>----------</p>
     <p>{{ message.title }}</p>
    <p>{{ message.content }}</p>
 <p>----------------</p>
-<a href="{% url 'delete_message' message.id %}" class="btn btn-danger">delete</a>
-<br>
-<a href="{% url 'update_message' message.id %}" class="btn btn-warning">update</a>
+    {% if request.user == message.author %}
+    <a href="{% url 'update_message' message.id %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'delete_message' message.id %}" class="btn btn-danger">Delete</a>
+    {% endif %}
+<a class="btn btn-primary" href="{% url 'home_bidule' %}">bidule</a>
 
-<br>
+    <hr>
+    <hr>
+    <div class="border border-dark">
+    {% for response in message.response_set.all %}
 
-<a href="{% url 'messageAll' %}" class="btn btn-secondary">tous message</a>
+        <div class="border border-dark">
+        <p>{{ response.author.username }} wrote : </p>
+            <p><strong>{{ response.content }}</strong></p>
+        </div>
 
+    {% endfor %}
+    </div>
+
+    <hr>
+    <form action="{% url 'response_message' message.id %}" method="post" class="form">
+    {% csrf_token %}
+        {{ responseForm|crispy }}
+        <button type="submit" class="btn btn-success">respond</button>
+    </form>
+
+    <hr>
 
 {% endblock %}
