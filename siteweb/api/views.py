@@ -1,6 +1,7 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from siteweb.api.serialzers import MessageSerializer
+from siteweb.api.serialzers import MessageSerializer, MessageDeSerializer
 from siteweb.models import Message, User, Category
 
 
@@ -19,16 +20,17 @@ def get_message(request, id):
     return Response(serialized_message.data)
 
 
+@permission_classes([IsAuthenticated])
 @api_view(['POST'])
-def new_messages(request):
+def new_message(request):
     if request.method == 'POST':
         newMessage = Message()
-        newMessage.author = User.objects.get(id=1)
-        data = request.POST
-        newMessage.category = data.get('category')
-        message = MessageSerializer(instance=newMessage, data=request.data)
+        user = request.user.id
+        newMessage.author = User.objects.get(id=user)
+        message = MessageDeSerializer(instance=newMessage, data=request.data)
+        print(user)
 
         if message.is_valid():
             message.save()
             return Response(message.data)
-    return None
+    return Response('error')

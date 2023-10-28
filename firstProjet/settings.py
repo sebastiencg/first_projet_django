@@ -40,11 +40,12 @@ INSTALLED_APPS = [
     'crispy_forms',
     "crispy_bootstrap5",
     'rest_framework',
+    'rest_framework_simplejwt',
 
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "boorest_tstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,6 +58,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'firstProjet.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 TEMPLATES = [
     {
